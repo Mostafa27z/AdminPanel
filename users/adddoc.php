@@ -12,13 +12,13 @@ if(isset($_POST['add'])){
     $pass = $_POST['pass'];
     $email = $_POST['email'];
     
-    if(empty($name) or empty($pass) or empty($email)  ){
+    if(validate($name) or validate($pass) or validate($email)  ){
         $fail = "Please fill all inputs";
     }
     else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $fail = "Invalid email format";
       }
-    else if(strlen($pass) < 8){
+    else if(len($pass , 8 , 50)){
         $fail = "Password should be at least 8 chararcters";
       }
     else{

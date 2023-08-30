@@ -21,14 +21,20 @@ if(isset($_POST['add'])){
     $img = rand(0,1000).rand(0,1000).$_FILES['img']['name'];
     $tmp = $_FILES['img']['tmp_name'];
     $folder = "upload/" . $img;
-    if(empty($name) or empty($pass) or empty($email) or empty($stat)   ){
+    if(validate($name) or validate($pass) or validate($email) or validate($stat)   ){
         $fail = "Please fill all inputs";
     }
     else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $fail = "Invalid email format";
       }
-    else if(strlen($pass) < 8){
-        $fail = "Password should be at least 8 chararcters";
+      else if(!isimg($_FILES['img']['type'] , "image/jpeg" , "image/jpg" , "image/png")) {
+        $fail = "please upload an image (jpeg , png , jpg)";
+      }
+      else if(imgSize($_FILES['img']['size'] , 1)) {
+        $fail = "image cannot exceed 1 mega";
+      }
+    else if(len($pass , 8 , 50) ){
+        $fail = "Password should be between 8 to 50 chararcters";
       }
       else if($stat < 0 or $stat > 3){
         $fail = "Stat should be 1 or 2 only";
@@ -38,6 +44,10 @@ if(isset($_POST['add'])){
         $sql = "INSERT INTO admin (name  , pass , email ,stat ,img) VALUES('$name'  , '$pass' ,'$email', $stat , '$img')";
         move_uploaded_file($tmp ,$folder);
         mysqli_query($conn , $sql);
+        $name = "";
+        $pass = "";
+        $email = "";
+        $stat = "";
       }
 }
 ?>
@@ -54,29 +64,29 @@ if(isset($_POST['add'])){
     <?php endif; ?>
   <div class="form-group">
     
-    <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Admin Name">
+    <input type="text" value="<?=$name?>" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Admin Name">
     
   </div>
   <br>
   <div class="form-group">
     
-    <input type="file" name="img" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Image">
+    <input type="file"   name="img" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Image">
     
   </div>
   <br>
   <div class="form-group">
-    <input type="email" name="email" class="form-control" id="exampleInputPassword1" placeholder="Email">
+    <input type="email" value="<?=$email?>"   name="email" class="form-control" id="exampleInputPassword1" placeholder="Email">
   </div>
   <br>
   <div class="form-group">
    
-    <input type="password" name="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <input type="password" value="<?=$pass?>" name="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
   </div>
   <br>
   
   <div class="form-group">
    
-    <input type="number" name="stat" class="form-control" id="exampleInputPassword1" placeholder="stat">
+    <input type="number" value="<?=$stat?>" name="stat" class="form-control" id="exampleInputPassword1" placeholder="stat">
   </div>
   <br>
   <button type="submit" name="add" class="btn btn-primary">Register</button>

@@ -75,7 +75,7 @@ if(isset($_POST['updatePass'])){
         <div class="card">
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-            <img src="http://127.0.0.1/niceadmin/niceadmin/upload/<?= $_SESSION['img'] ?>" alt="Profile" class="rounded-circle">
+            <img src="http://127.0.0.1/niceadmin/niceadmin/admin/upload/<?= $_SESSION['img'] ?>" alt="Profile" class="rounded-circle">
             <h2><?= $_SESSION['name'] ?></h2>
             <h3>Web Designer</h3>
             <div class="social-links mt-2">
@@ -144,7 +144,7 @@ if(isset($_POST['updatePass'])){
                   <div class="row mb-3">
                     <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                     <div class="col-md-8 col-lg-9">
-                      <img src="http://127.0.0.1/niceadmin/niceadmin/upload/<?= $_SESSION['img'] ?>" alt="Profile">
+                      <img src="http://127.0.0.1/niceadmin/niceadmin/admin/upload/<?= $_SESSION['img'] ?>" alt="Profile">
                       <div class="pt-2">
                         
                           <input type="file" name="img" id="">
